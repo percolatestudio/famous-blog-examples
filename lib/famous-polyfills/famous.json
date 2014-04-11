@@ -1,0 +1,16 @@
+{
+  "name": "polyfills",
+  "namespace": "famous",
+  "type": "famous",
+  "description": "",
+  "version": "0.1.1",
+  "keywords": [],
+  "dependencies": {},
+  "scripts": [
+    "index.js",
+    "classList.js",
+    "functionPrototypeBind.js",
+    "requestAnimationFrame.js"
+  ],
+  "repo": "https://github.com/Famous/famous-polyfills"
+}
