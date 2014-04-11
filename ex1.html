@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>Ex1</title>
+    <link rel="stylesheet" href="build.css" />
+    <script src="build.js"></script>
+    <style>
+      body { background-color: white; }
+
+      .test-surface {
+        background-color: #EBEBF1;
+        font-family: "Helvetica Neue", Helvetica, sans-serif;
+        font-weight: 300;
+        padding: 20px;
+        font-size: 16px;
+        -webkit-user-select: none;
+        text-align: center;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      function ready() {
+        // hack to load minified famo.us library
+        require(['index.js']);
+
+        var Engine = require('famous/engine');
+        var Surface = require('famous/surface');
+        var Modifier = require('famous/modifier');
+        var Matrix = require('famous/transform');
+        var EasingCurves = require('famous/transitions/easing');
+
+        var mainCtx = Engine.createContext();
+
+        // Create a surface, content is html
+        var surface = new Surface({
+          size: [100, 100],
+          content: "<span>Click To<br/>Move<br/>Surface</span>",
+          classes: ["test-surface"]
+        });
+
+        // Define Matrix transforms for start/end positions
+        // and an easing curve to transition between them
+        var startPos = Matrix.translate(20,20,0);
+        var endPos = Matrix.translate(150,200,0);
+        var transform = new Modifier({transform: startPos});
+        var easeTransition = { duration: 450, curve: EasingCurves.inOutCubic };
+
+        // Apply the transition on click and switch start/end
+        surface.on('click', function(e) {
+          transform.setTransform(endPos, easeTransition);
+          startPos = [endPos, endPos = startPos][0];
+        });
+
+        mainCtx.add(transform).link(surface);
+      }
+    </script>
+  </head>
+  <body onload="ready();">
+  </body>
+</html>
